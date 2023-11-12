@@ -1,0 +1,26 @@
+.sign-out-modal-title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-out-modal-button-container {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: space-around;
+  padding-left: 3px;
+}
+
+.sign-out-modal-button {
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 6px;
+  border-width: 0px;
+  background-color: rgb(31 41 55);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
