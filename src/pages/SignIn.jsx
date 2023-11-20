@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import signInValidation from "../validation/SignInValidation";
 
 const SignIn = () => {
@@ -22,12 +22,9 @@ const SignIn = () => {
     let errorMessages = signInValidation(values);
 
     try {
-      console.log(values);
-
       await axios
         .post("http://localhost:8800/api/v1/login", values)
         .then((response) => {
-          console.log(response);
           if (response.data.length) {
             navigate(
               `/dashboard/${

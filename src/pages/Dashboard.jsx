@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link, useParams } from "react-router-dom";
 import ExpenseFolderModal from "./ExpenseFolderModal";
 import NavigationBar from "./NavigationBar";
 import "../styling/modal.css";
@@ -110,10 +110,11 @@ const Dashboard = () => {
     const getData = async () => {
       try {
         const userData = await axios.get(
-          process.env.REACT_APP_APILINK + "/api/v1/user/" + userId
+          "http://localhost:8800/api/v1/user/" + userId
         );
+        // console.log(userData);
         setUser({ ...userData.data[0] }); // the axios responses are usually in a 'data' property
-
+        console.log("test");
         setNavigation([
           {
             name: "Dashboard",
@@ -141,17 +142,23 @@ const Dashboard = () => {
     const getExpenseFolderData = async () => {
       try {
         const expenseFolderData = await axios.get(
-          process.env.REACT_APP_APILINK + "/api/v1/expenseFolder/" + userId
+          "http://localhost:8800/api/v1/expenseFolder/" + userId
         );
 
         setExpenseFolders(expenseFolderData.data);
 
         const initialExpenseFolder = {};
-        expenseFolderData.data.forEach((folder) => {
-          initialExpenseFolder[folder.expense_folder_id] = {
-            name: folder.name,
-          };
-        });
+        // expenseFolderData.data.forEach((folder) => {
+        //   initialExpenseFolder[folder.expense_folder_id] = {
+        //     name: folder.name,
+        //   };
+        // });
+        Array.isArray(expenseFolderData.data) &&
+          expenseFolderData.data.forEach((folder) => {
+            initialExpenseFolder[folder.expense_folder_id] = {
+              name: folder.name,
+            };
+          });
 
         setExpenseFolder(initialExpenseFolder);
       } catch (err) {
@@ -161,8 +168,6 @@ const Dashboard = () => {
 
     getData();
     getExpenseFolderData();
-
-    console.log(expenseFolder);
   }, [userId]);
 
   useEffect(() => {
@@ -256,62 +261,6 @@ const Dashboard = () => {
           ))}
         </div>
       )}
-      {/* <div className="cards-container">
-        {expenseFolders.map((expenseFolder) => (
-          <div
-            key={expenseFolder.expense_folder_id}
-            className="card"
-            onClick={(e) => handleCardClick(expenseFolder, e)}
-          >
-            <div className="card-title-container">
-              {inputFields[expenseFolder.expense_folder_id] ? (
-                <div className="input-box-container">
-                  <input
-                    className="input-box"
-                    type="text"
-                    name="name"
-                    value={
-                      expenseFolders.find(
-                        (item) =>
-                          item.expense_folder_id ===
-                          expenseFolder.expense_folder_id
-                      ).name
-                    }
-                    onChange={(e) =>
-                      handleChange(expenseFolder.expense_folder_id, e)
-                    }
-                  />
-                </div>
-              ) : (
-                <h2 className="card-title">{expenseFolder.name}</h2>
-              )}
-            </div>
-
-            <div className="buttons-container">
-              <button
-                className="cardBtn"
-                name={elementName}
-                onClick={(e) =>
-                  handleButtonClick(expenseFolder.expense_folder_id, e)
-                }
-              >
-                {inputFields[expenseFolder.expense_folder_id]
-                  ? "Update"
-                  : "Edit"}
-              </button>
-              <button
-                className="cardBtn"
-                name="delete"
-                onClick={(e) =>
-                  handleButtonClick(expenseFolder.expense_folder_id, e)
-                }
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div> */}
 
       {isModalOpen && (
         <ExpenseFolderModal
