@@ -44,11 +44,6 @@ const Expenses = () => {
         );
         setExpenseFolderName(expenseFolderData.data[0].name);
 
-        const allExpenses = await axios.get(
-          "http://localhost:8800/api/v1/expense/" + userId + "/" + expFolderId
-        );
-        setExpenses(allExpenses.data); // the axios responses are usually in a 'data' property
-
         const userData = await axios.get(
           "http://localhost:8800/api/v1/user/" + userId
         );
@@ -67,6 +62,11 @@ const Expenses = () => {
             current: false,
           },
         ]);
+
+        const allExpenses = await axios.get(
+          "http://localhost:8800/api/v1/expense/" + userId + "/" + expFolderId
+        );
+        setExpenses(allExpenses.data); // the axios responses are usually in a 'data' property
       } catch (err) {
         console.log(err);
       }

@@ -83,8 +83,6 @@ const Dashboard = () => {
       }
       window.location.reload();
     }
-
-    // console.log("After: " + inputFields[expId]);
   };
 
   const handleChange = (folderId, e) => {
@@ -112,9 +110,9 @@ const Dashboard = () => {
         const userData = await axios.get(
           "http://localhost:8800/api/v1/user/" + userId
         );
-        // console.log(userData);
+
         setUser({ ...userData.data[0] }); // the axios responses are usually in a 'data' property
-        console.log("test");
+
         setNavigation([
           {
             name: "Dashboard",
